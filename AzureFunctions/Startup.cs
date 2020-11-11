@@ -47,7 +47,7 @@ namespace AzureFunctions
                                  cosmosDbConfig.PrimaryKey,
                                  cosmosDbConfig.DatabaseName,
                                  cosmosDbConfig.Containers);
-            services.AddScoped<IOfferRepository, OfferRepository>();
+            services.AddScoped<IJobApplicationRepository, jobJobApplicationRepository>();
         }
     }
 }

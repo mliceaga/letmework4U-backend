@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Core.Interfaces.Persistence
 {
-    public interface IOfferRepository : IRepository<Offer>
+    public interface IJobApplicationRepository : IRepository<JobApplication>
     {
     }
 }

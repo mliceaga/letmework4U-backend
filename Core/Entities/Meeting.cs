@@ -16,7 +16,7 @@ namespace Core.Entities
         public string MeetingAccessCode { get; set; }
         public Recruiter[] Recruiters { get; set; }
         public Applicant Applicant { get; set; }
-        public Offer Offer { get; set; }
+        public JobApplication JobApplication { get; set; }
         public string Outcome { get; set; }
         public Meeting FollowUpMeeting { get; set; }
         

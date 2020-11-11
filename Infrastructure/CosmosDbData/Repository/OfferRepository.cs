@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.CosmosDbData.Repository
 {
-    public class OfferRepository : CosmosDbRepository<Offer>, IOfferRepository
+    public class jobJobApplicationRepository : CosmosDbRepository<JobApplication>, IJobApplicationRepository
     {
         /// <summary>
         ///     CosmosDB container name
         /// </summary>
-        public override string ContainerName { get; } = "offers";
+        public override string ContainerName { get; } = "jobApplications";
 
         /// <summary>
         ///     Generate Id.
@@ -21,16 +21,16 @@ namespace Infrastructure.CosmosDbData.Repository
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public override string GenerateId(Offer entity) => $"{Guid.NewGuid()}";
+        public override string GenerateId(JobApplication entity) => $"{Guid.NewGuid()}";
 
-        public OfferRepository(ICosmosDbContainerFactory factory) : base(factory)
+        public jobJobApplicationRepository(ICosmosDbContainerFactory factory) : base(factory)
         { }
 
         // Use Cosmos DB Parameterized Query to avoid SQL Injection.
         // Get by Category is also an example of single partition read, where get by title will be a cross partition read
-        public async Task<IEnumerable<Offer>> GetItemsAsyncByYear(string companyId)
+        public async Task<IEnumerable<JobApplication>> GetItemsAsyncByYear(string companyId)
         {
-            List<Offer> results = new List<Offer>();
+            List<JobApplication> results = new List<JobApplication>();
             string query = @$"SELECT c.* FROM c WHERE c.companyId = @CompanyId";
 
             QueryDefinition queryDefinition = new QueryDefinition(query)
