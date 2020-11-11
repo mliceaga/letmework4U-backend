@@ -11,7 +11,7 @@ variables:
   azureSubscription: '3e7736f7-a5ca-4681-ad13-5225a3555257'
 
   # Function app name
-  functionAppName: 'letmwork4u-offers'
+  functionAppName: 'letmwork4u-jobs'
 
   # Agent VM image name
   vmImageName: 'vs2017-win2016'
