@@ -33,6 +33,7 @@ namespace Core.Entities
         public Meeting FirstMeeting { get; set; }
         public Note[] Notes { get; set; }
         public Label[] Labels { get; set; }
+        public Note Note { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

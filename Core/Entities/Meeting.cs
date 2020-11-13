@@ -21,6 +21,8 @@ namespace Core.Entities
         public string JobApplicationId { get; set; }
         public string Outcome { get; set; }
         public Meeting FollowUpMeeting { get; set; }
+        public Note Note { get; set; }
+        public Label[] Labels { get; set; }
         public bool IsDeleted { get; set; }
     }
 }
