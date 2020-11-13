@@ -9,8 +9,11 @@ namespace Core.Entities
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public Contact[] Contacts { get; set; }
+        public string Website { get; set; }
         public string Telephone { get; set; }
         public string Address { get; set; }
+        public string Country { get; set; }
+        public Label[] Labels { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

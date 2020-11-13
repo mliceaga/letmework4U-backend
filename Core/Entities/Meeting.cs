@@ -7,18 +7,20 @@ namespace Core.Entities
 {
     public class Meeting : BaseEntity
     {
-        public string YearPartitionKey { get; set; }
         public string Title { get; set; }
+        public string Description { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
-        public string Location { get; set; }
+        public bool IsPhonecall { get; set; }
+        public string OnlineMeetingURL { get; set; }
+        public string PhysicalLocation { get; set; }
         public string MeetingId { get; set; }
         public string MeetingAccessCode { get; set; }
-        public Recruiter[] Recruiters { get; set; }
-        public Applicant Applicant { get; set; }
-        public JobApplication JobApplication { get; set; }
+        public string[] RecruiterIds { get; set; }
+        public string ApplicantId { get; set; }
+        public string JobApplicationId { get; set; }
         public string Outcome { get; set; }
         public Meeting FollowUpMeeting { get; set; }
-        
+        public bool IsDeleted { get; set; }
     }
 }

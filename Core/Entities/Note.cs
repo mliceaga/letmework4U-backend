@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Core.Entities
 {
-    public class Recruiter : Contact
+    public class Note
     {
-        public bool IsFromConsultancy { get; set; }
+        public string Text { get; set; }
     }
 }
