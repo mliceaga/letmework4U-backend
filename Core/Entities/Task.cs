@@ -23,5 +23,6 @@ namespace Core.Entities
         public string Note { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime Deadline { get; set; }
+        public bool Completed { get; set; }
     }
 }

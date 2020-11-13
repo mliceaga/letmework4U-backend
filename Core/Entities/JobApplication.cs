@@ -29,11 +29,15 @@ namespace Core.Entities
         public bool IsConsultancy { get; set; }
         public JobApplicationStatus Status { get; set; }
         public DateTime DateApplied { get; set; }
-        public Recruiter[] Recruiters { get; set; }
+        public string[] RecruiterIds { get; set; }
         public Meeting FirstMeeting { get; set; }
         public Note[] Notes { get; set; }
+        public Task[] Tasks { get; set; }
         public Label[] Labels { get; set; }
-        public Note Note { get; set; }
+        public DateTime DeadLine { get; set; }
+        public string JobOffer { get; set; }
+        public DateTime CreatedOnDate { get; set; }
+        // TODO nice to have, an image URL to display the company logo or something like that
         public bool IsDeleted { get; set; }
     }
 }
