@@ -8,6 +8,6 @@ namespace Core.Entities
     {
         public string CurrentJob { get; set; }
         public string LinkedInUrl { get; set; }
-        public JobApplication[] JobApplications { get; set; }
+        public string[] JobApplicationIds { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace Core.Entities
         public bool IsDirect { get; set; }
         public bool IsConsultancy { get; set; }
         public JobApplicationStatus Status { get; set; }
+        public string ApplicantId { get; set; }
         public DateTime DateApplied { get; set; }
         public string[] RecruiterIds { get; set; }
         public Meeting FirstMeeting { get; set; }
