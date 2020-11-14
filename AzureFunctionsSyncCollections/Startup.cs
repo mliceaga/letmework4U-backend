@@ -48,7 +48,11 @@ namespace AzureFunctions
                                  cosmosDbConfig.DatabaseName,
                                  cosmosDbConfig.Containers);
             services.AddScoped<IJobApplicationRepository, jobJobApplicationRepository>();
-            services.AddScoped<IApplicantRepository, taskRepository>()
+            services.AddScoped<IApplicantRepository, ApplicantRepository>();
+            services.AddScoped<IApplicantTaskRepository, ApplicantTaskRepository>();
+            services.AddScoped<ILabelRepository, LabelRepository>();
+            services.AddScoped<IMeetingRepository, MeetingRepository>();
+            services.AddScoped<IRecruiterRepository, RecruiterRepository>();
         }
     }
 }
