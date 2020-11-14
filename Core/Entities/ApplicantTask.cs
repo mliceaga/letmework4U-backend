@@ -17,8 +17,9 @@ namespace Core.Entities
         Apply = 8
     }
 
-    public class Task: BaseEntity
+    public class ApplicantTask: BaseEntity
     {
+        public string ApplicantId { get; set; }
         public TaskType Type { get; set; }
         public string Note { get; set; }
         public DateTime StartDate { get; set; }

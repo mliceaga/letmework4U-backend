@@ -33,7 +33,7 @@ namespace Core.Entities
         public string[] RecruiterIds { get; set; }
         public Meeting FirstMeeting { get; set; }
         public Note[] Notes { get; set; }
-        public Task[] Tasks { get; set; }
+        public ApplicantTask[] ApplicantTasks { get; set; }
         public Label[] Labels { get; set; }
         public DateTime DeadLine { get; set; }
         public string JobOffer { get; set; }

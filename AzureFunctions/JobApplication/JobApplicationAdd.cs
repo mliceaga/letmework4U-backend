@@ -28,10 +28,17 @@ namespace AzureFunctions.JobApplication
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "JobApplications/JobApplicationAdd")] HttpRequest req,
             ILogger log)
         {
+            try { 
             var JobApplication = JsonConvert.DeserializeObject<Core.Entities.JobApplication>(await new StreamReader(req.Body).ReadToEndAsync());
 
             await _jobApplicationRepository.AddItemAsync(JobApplication);
-
+            }
+            catch(Exception ex)
+            {
+                return new StatusCodeResult(500);
+                // TO DO (add logger)
+                throw ex;
+            }
             return new OkResult();
         }
     }
