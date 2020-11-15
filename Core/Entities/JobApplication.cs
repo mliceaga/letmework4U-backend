@@ -30,7 +30,7 @@ namespace Core.Entities
         public JobApplicationStatus Status { get; set; }
         public string ApplicantId { get; set; }
         public DateTime DateApplied { get; set; }
-        public string[] RecruiterIds { get; set; }
+        public Recruiter[] Recruiters { get; set; }
         public Meeting FirstMeeting { get; set; }
         public Note[] Notes { get; set; }
         public ApplicantTask[] ApplicantTasks { get; set; }

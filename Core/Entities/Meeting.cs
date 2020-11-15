@@ -14,13 +14,12 @@ namespace Core.Entities
         public bool IsPhonecall { get; set; }
         public string OnlineMeetingURL { get; set; }
         public string PhysicalLocation { get; set; }
-        public string MeetingId { get; set; }
         public string MeetingAccessCode { get; set; }
         public string[] RecruiterIds { get; set; }
         public string ApplicantId { get; set; }
         public string JobApplicationId { get; set; }
         public string Outcome { get; set; }
-        public Meeting FollowUpMeeting { get; set; }
+        public Meeting[] FollowUpMeetings { get; set; }
         public Note Note { get; set; }
         public Label[] Labels { get; set; }
         public bool IsDeleted { get; set; }
