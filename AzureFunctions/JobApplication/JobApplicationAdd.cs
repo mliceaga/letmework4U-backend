@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Core.Entities;
 using Infrastructure.CosmosDbData.Repository;
 using Core.Interfaces.Persistence;
+using System.Linq;
 
 namespace AzureFunctions.JobApplication
 {
@@ -28,12 +29,41 @@ namespace AzureFunctions.JobApplication
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "JobApplications/JobApplicationAdd")] HttpRequest req,
             ILogger log)
         {
-            try { 
-            var JobApplication = JsonConvert.DeserializeObject<Core.Entities.JobApplication>(await new StreamReader(req.Body).ReadToEndAsync());
+            try
+            {
+                var jobApplication = JsonConvert.DeserializeObject<Core.Entities.JobApplication>(await new StreamReader(req.Body).ReadToEndAsync());
 
-            await _jobApplicationRepository.AddItemAsync(JobApplication);
+                if (jobApplication.Company != null)
+                {
+                    jobApplication.Company.Id = Guid.NewGuid().ToString();
+                }
+
+                if (jobApplication.ApplicantTasks.Any())
+                {
+                    foreach (var applicantTask in jobApplication.ApplicantTasks)
+                    {
+                        applicantTask.ApplicantId = jobApplication.ApplicantId;
+                        applicantTask.Id = Guid.NewGuid().ToString();
+                    }
+                }
+
+                if (jobApplication.Recruiters.Any())
+                {
+                    foreach (var applicantTask in jobApplication.Recruiters)
+                    {
+                        applicantTask.Id = Guid.NewGuid().ToString();
+                    }
+                }
+
+                if (jobApplication.FirstMeeting != null)
+                {
+                    jobApplication.FirstMeeting.ApplicantId = jobApplication.ApplicantId;
+                    jobApplication.FirstMeeting.Id = Guid.NewGuid().ToString();
+                }
+
+                await _jobApplicationRepository.AddItemAsync(jobApplication);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new StatusCodeResult(500);
                 // TO DO (add logger)
