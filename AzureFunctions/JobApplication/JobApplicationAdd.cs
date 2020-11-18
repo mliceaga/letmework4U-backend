@@ -49,9 +49,9 @@ namespace AzureFunctions.JobApplication
 
                 if (jobApplication.Recruiters.Any())
                 {
-                    foreach (var applicantTask in jobApplication.Recruiters)
+                    foreach (var recruiter in jobApplication.Recruiters)
                     {
-                        applicantTask.Id = Guid.NewGuid().ToString();
+                        recruiter.Id = Guid.NewGuid().ToString();
                     }
                 }
 
@@ -62,6 +62,7 @@ namespace AzureFunctions.JobApplication
                 }
 
                 await _jobApplicationRepository.AddItemAsync(jobApplication);
+
             }
             catch (Exception ex)
             {

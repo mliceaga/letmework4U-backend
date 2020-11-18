@@ -15,7 +15,7 @@ namespace Core.Entities
         public string OnlineMeetingURL { get; set; }
         public string PhysicalLocation { get; set; }
         public string MeetingAccessCode { get; set; }
-        public string[] RecruiterIds { get; set; }
+        public Recruiter[] Recruiters { get; set; }
         public string ApplicantId { get; set; }
         public string JobApplicationId { get; set; }
         public string Outcome { get; set; }
