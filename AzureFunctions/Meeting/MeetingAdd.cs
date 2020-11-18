@@ -28,6 +28,7 @@ namespace AzureFunctions.Meeting
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "Meetings/MeetingAdd")] HttpRequest req,
             ILogger log)
         {
+            Core.Entities.Meeting meetingFromDd = null;
             try
             {
                 var meeting = JsonConvert.DeserializeObject<Core.Entities.Meeting>(await new StreamReader(req.Body).ReadToEndAsync());
@@ -50,7 +51,9 @@ namespace AzureFunctions.Meeting
                     }
                 }
 
-                await _meetingRepository.AddItemAsync(meeting);
+                var meetingId = await _meetingRepository.AddItemAsync(meeting);
+
+                meetingFromDd = await _meetingRepository.GetItemAsync(new Guid(meetingId));
             }
             catch (Exception ex)
             {
@@ -59,7 +62,7 @@ namespace AzureFunctions.Meeting
                 // TO DO (add logger)
                 throw ex;
             }
-            return new OkResult();
+            return new OkObjectResult(meetingFromDd);
         }
     }
 }

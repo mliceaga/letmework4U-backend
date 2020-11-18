@@ -36,10 +36,11 @@ namespace Infrastructure.CosmosDbData.Repository
             this._container = this._cosmosDbContainerFactory.GetContainer(ContainerName)._container;
         }
 
-        public async Task AddItemAsync(T item)
+        public async Task<string> AddItemAsync(T item)
         {
             item.Id = GenerateId(item);
             await _container.CreateItemAsync<T>(item, null);
+            return item.Id;
         }
 
         public async Task DeleteItemAsync(Guid id)

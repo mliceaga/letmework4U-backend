@@ -23,7 +23,7 @@ namespace Core.Interfaces.Persistence
         /// <returns></returns>
         Task<IEnumerable<T>> GetItemsAsync(ISpecification<T> specification);
         Task<T> GetItemAsync(Guid id);
-        Task AddItemAsync(T item);
+        Task<string> AddItemAsync(T item);
         Task UpdateItemAsync(Guid id, T item);
         Task DeleteItemAsync(Guid id);
     }

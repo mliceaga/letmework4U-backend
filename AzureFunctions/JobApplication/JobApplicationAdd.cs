@@ -29,6 +29,7 @@ namespace AzureFunctions.JobApplication
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "JobApplications/JobApplicationAdd")] HttpRequest req,
             ILogger log)
         {
+            Core.Entities.JobApplication jobApplicationFromDb = null;
             try
             {
                 var jobApplication = JsonConvert.DeserializeObject<Core.Entities.JobApplication>(await new StreamReader(req.Body).ReadToEndAsync());
@@ -61,8 +62,9 @@ namespace AzureFunctions.JobApplication
                     jobApplication.FirstMeeting.Id = Guid.NewGuid().ToString();
                 }
 
-                await _jobApplicationRepository.AddItemAsync(jobApplication);
+                var jobApplicationId = await _jobApplicationRepository.AddItemAsync(jobApplication);
 
+                jobApplicationFromDb = await _jobApplicationRepository.GetItemAsync(new Guid(jobApplicationId));
             }
             catch (Exception ex)
             {
@@ -71,7 +73,7 @@ namespace AzureFunctions.JobApplication
                 // TO DO (add logger)
                 throw ex;
             }
-            return new OkResult();
+            return new OkObjectResult(jobApplicationFromDb);
         }
     }
 }
