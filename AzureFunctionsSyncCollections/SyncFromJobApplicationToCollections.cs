@@ -13,7 +13,6 @@ namespace AzureFunctionsSyncCollections
     {
         private readonly IJobApplicationRepository jobApplicationRepository;
         private readonly IApplicantTaskRepository applicantTaskRepository;
-        // private readonly IApplicantRepository applicantRepository;
         private readonly IMeetingRepository meetingRepository;
         private readonly IRecruiterRepository recruiterRepository;
 
@@ -32,14 +31,17 @@ namespace AzureFunctionsSyncCollections
         public static void Run([CosmosDBTrigger(
             databaseName: "letmeworkCosmosDB",
             collectionName: "jobApplications",
-            ConnectionStringSetting = "ConnectionStringCosmosDB",
-            LeaseCollectionName = "leases")]IReadOnlyList<Document> input, ILogger log)
+            ConnectionStringSetting = "letmework4U_DOCUMENTDB",
+            LeaseCollectionName = "leasesJobApplications",
+            CreateLeaseCollectionIfNotExists = true)]IReadOnlyList<Document> input, ILogger log)
         {
             if (input != null && input.Count > 0)
             {
                 log.LogInformation("jobApplications modified " + input.Count);
                 log.LogInformation("First jobApplication Id " + input[0].Id);
                 var jobApplication = (JobApplication)input;
+
+                //jobApplicationRepository.UpdateItemAsync()
                 //applicantTaskRepository.GetItemAsync();
             }
         }

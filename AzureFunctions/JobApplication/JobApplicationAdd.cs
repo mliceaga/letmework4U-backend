@@ -62,6 +62,8 @@ namespace AzureFunctions.JobApplication
                     jobApplication.FirstMeeting.Id = Guid.NewGuid().ToString();
                 }
 
+                jobApplication.CreatedOnDate = DateTime.UtcNow;
+
                 var jobApplicationId = await _jobApplicationRepository.AddItemAsync(jobApplication);
 
                 jobApplicationFromDb = await _jobApplicationRepository.GetItemAsync(new Guid(jobApplicationId));
