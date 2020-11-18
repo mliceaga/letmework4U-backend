@@ -28,7 +28,7 @@ namespace Infrastructure.CosmosDbData.Repository
 
         // Use Cosmos DB Parameterized Query to avoid SQL Injection.
         // Get by Applicant is also an example of single partition read, where get by any other collection value will be a cross partition read
-        public async Task<IEnumerable<Company>> GetItemsAsyncByApplicantId(string companyName)
+        public async Task<IEnumerable<Company>> GetItemsAsyncByName(string companyName)
         {
             List<Company> results = new List<Company>();
             string query = @$"SELECT c.* FROM c WHERE c.name = @companyName";

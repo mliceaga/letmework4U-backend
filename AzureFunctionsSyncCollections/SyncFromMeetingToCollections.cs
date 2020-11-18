@@ -11,24 +11,24 @@ namespace AzureFunctionsSyncCollections
 {
     public class SyncFromMeetingToCollections
     {
-        private readonly IJobApplicationRepository jobApplicationRepository;
-        private readonly IApplicantTaskRepository applicantTaskRepository;
-        private readonly IMeetingRepository meetingRepository;
-        private readonly IRecruiterRepository recruiterRepository;
+        private readonly IJobApplicationRepository _jobApplicationRepository;
+        private readonly IApplicantTaskRepository _applicantTaskRepository;
+        private readonly IMeetingRepository _meetingRepository;
+        private readonly IRecruiterRepository _recruiterRepository;
 
-        public SyncFromMeetingToCollections(IJobApplicationRepository _jobApplicationRepository,
-        IApplicantTaskRepository _applicantTaskRepository,
-        IMeetingRepository _meetingRepository,
-        IRecruiterRepository _recruiterRepository)
+        public SyncFromMeetingToCollections(IJobApplicationRepository jobApplicationRepository,
+        IApplicantTaskRepository applicantTaskRepository,
+        IMeetingRepository meetingRepository,
+        IRecruiterRepository recruiterRepository)
         {
-            jobApplicationRepository = _jobApplicationRepository;
-            applicantTaskRepository = _applicantTaskRepository;
-            meetingRepository = _meetingRepository;
-            recruiterRepository = _recruiterRepository;
+            _jobApplicationRepository = jobApplicationRepository;
+            _applicantTaskRepository = applicantTaskRepository;
+            _meetingRepository = meetingRepository;
+            _recruiterRepository = recruiterRepository;
         }
 
         [FunctionName("SyncFromMeetingToCollections")]
-        public static void Run([CosmosDBTrigger(
+        public void Run([CosmosDBTrigger(
             databaseName: "letmeworkCosmosDB",
             collectionName: "meetings",
             ConnectionStringSetting = "letmework4U_DOCUMENTDB",
@@ -39,8 +39,19 @@ namespace AzureFunctionsSyncCollections
             {
                 log.LogInformation("jobApplications modified " + input.Count);
                 log.LogInformation("First jobApplication Id " + input[0].Id);
-                var jobApplication = (JobApplication)input;
-                //applicantTaskRepository.GetItemAsync();
+                var meeting = (Meeting)input;
+
+                var applicantIdPartitionKey = new Microsoft.Azure.Cosmos.PartitionKey(meeting.ApplicantId);
+
+                foreach (var meetingFollowUp in meeting.FollowUpMeetings)
+                {
+                    _meetingRepository.AddOrUpdateAsync(meetingFollowUp, applicantIdPartitionKey);
+                }
+
+                foreach (var recruiter in meeting.Recruiters)
+                {
+                    _recruiterRepository.AddOrUpdateAsync(recruiter, new Microsoft.Azure.Cosmos.PartitionKey(recruiter.Lastname));
+                }
             }
         }
     }

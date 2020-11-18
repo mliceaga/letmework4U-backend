@@ -6,6 +6,7 @@ using Core.Specifications.Base;
 using Infrastructure.CosmosDbData.Interfaces;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,18 +44,15 @@ namespace Infrastructure.CosmosDbData.Repository
             return item.Id;
         }
 
-        //public async Task<T> AddOrUpdateAsync(T item, RequestOptions requestOptions = null)
-        //{
-        //    T upsertedEntity;
+        public async Task<T> AddOrUpdateAsync(T item, PartitionKey partitionKey)
+        {
+            T upsertedEntity;
 
-        //    PartitionKey partitionKey;
-        //    requestOptions.Properties.TryGetValue("PartitionKey", out partitionKey);
+            var upsertedDoc = await _container.UpsertItemAsync(item, partitionKey);
+            upsertedEntity = JsonConvert.DeserializeObject<T>(upsertedDoc.Resource.ToString());
 
-        //    var upsertedDoc = await _container.UpsertItemAsync(item, );
-        //    upsertedEntity = JsonConvert.DeserializeObject<T>(upsertedDoc.Resource.ToString());
-
-        //    return upsertedEntity;
-        //}
+            return upsertedEntity;
+        }
 
         public async Task DeleteItemAsync(Guid id)
         {

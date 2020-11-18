@@ -1,5 +1,6 @@
 ﻿using Ardalis.Specification;
 using Core.Entities.Base;
+using Microsoft.Azure.Cosmos;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -26,5 +27,6 @@ namespace Core.Interfaces.Persistence
         Task<string> AddItemAsync(T item);
         Task UpdateItemAsync(Guid id, T item);
         Task DeleteItemAsync(Guid id);
+        Task<T> AddOrUpdateAsync(T item, PartitionKey partitionKey)
     }
 }

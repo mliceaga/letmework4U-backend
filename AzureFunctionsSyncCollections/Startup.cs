@@ -53,6 +53,7 @@ namespace AzureFunctions
             services.AddScoped<ILabelRepository, LabelRepository>();
             services.AddScoped<IMeetingRepository, MeetingRepository>();
             services.AddScoped<IRecruiterRepository, RecruiterRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
         }
     }
 }
