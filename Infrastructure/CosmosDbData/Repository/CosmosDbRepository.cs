@@ -43,6 +43,19 @@ namespace Infrastructure.CosmosDbData.Repository
             return item.Id;
         }
 
+        //public async Task<T> AddOrUpdateAsync(T item, RequestOptions requestOptions = null)
+        //{
+        //    T upsertedEntity;
+
+        //    PartitionKey partitionKey;
+        //    requestOptions.Properties.TryGetValue("PartitionKey", out partitionKey);
+
+        //    var upsertedDoc = await _container.UpsertItemAsync(item, );
+        //    upsertedEntity = JsonConvert.DeserializeObject<T>(upsertedDoc.Resource.ToString());
+
+        //    return upsertedEntity;
+        //}
+
         public async Task DeleteItemAsync(Guid id)
         {
             await this._container.DeleteItemAsync<T>(id.ToString(), PartitionKey.None);

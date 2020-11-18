@@ -15,16 +15,19 @@ namespace AzureFunctionsSyncCollections
         private readonly IApplicantTaskRepository applicantTaskRepository;
         private readonly IMeetingRepository meetingRepository;
         private readonly IRecruiterRepository recruiterRepository;
+        private readonly ICompanyRepository companyRepository;
 
         public SyncFromJobApplicationToCollections(IJobApplicationRepository _jobApplicationRepository,
         IApplicantTaskRepository _applicantTaskRepository,
         IMeetingRepository _meetingRepository,
-        IRecruiterRepository _recruiterRepository)
+        IRecruiterRepository _recruiterRepository,
+        ICompanyRepository _companyRepository)
         {
             jobApplicationRepository = _jobApplicationRepository;
             applicantTaskRepository = _applicantTaskRepository;
             meetingRepository = _meetingRepository;
             recruiterRepository = _recruiterRepository;
+            companyRepository = _companyRepository;
         }
 
         [FunctionName("SyncFromJobApplicationToCollections")]
@@ -41,6 +44,9 @@ namespace AzureFunctionsSyncCollections
                 log.LogInformation("First jobApplication Id " + input[0].Id);
                 var jobApplication = (JobApplication)input;
 
+                //companyRepository.
+                //jobApplication.Company
+                
                 //jobApplicationRepository.UpdateItemAsync()
                 //applicantTaskRepository.GetItemAsync();
             }
