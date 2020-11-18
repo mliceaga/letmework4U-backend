@@ -65,6 +65,7 @@ namespace AzureFunctions.JobApplication
             }
             catch (Exception ex)
             {
+                // TODO send 400 errors if it's the case, otherwise send 500.
                 return new StatusCodeResult(500);
                 // TO DO (add logger)
                 throw ex;

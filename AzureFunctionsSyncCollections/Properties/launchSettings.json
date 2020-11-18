@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AzureFunctionsSyncCollections": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --port 7073 --nodeDebugPort 5860"
+    }
+  }
+}

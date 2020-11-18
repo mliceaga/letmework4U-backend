@@ -32,7 +32,7 @@ namespace AzureFunctionsSyncCollections
         public static void Run([CosmosDBTrigger(
             databaseName: "letmeworkCosmosDB",
             collectionName: "jobApplications",
-            ConnectionStringSetting = "ConnectionStrings:CosmosDB",
+            ConnectionStringSetting = "ConnectionStringCosmosDB",
             LeaseCollectionName = "leases")]IReadOnlyList<Document> input, ILogger log)
         {
             if (input != null && input.Count > 0)
