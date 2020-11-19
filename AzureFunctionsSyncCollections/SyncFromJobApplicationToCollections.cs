@@ -47,18 +47,16 @@ namespace AzureFunctionsSyncCollections
                     var jobApplication = JsonConvert.DeserializeObject<JobApplication>(input[0].ToString());
 
                     if(jobApplication.Company != null)
-                        _companyRepository.AddOrUpdateAsync(jobApplication.Company, new Microsoft.Azure.Cosmos.PartitionKey(jobApplication.Company.Name));
+                        _companyRepository.UpdateItemAsync(new Guid(jobApplication.Company.Id), jobApplication.Company);
 
                     if(jobApplication.FirstMeeting != null)
-                        _meetingRepository.AddOrUpdateAsync(jobApplication.FirstMeeting, new Microsoft.Azure.Cosmos.PartitionKey(jobApplication.ApplicantId));
-
-                    var applicantIdPartitionKey = new Microsoft.Azure.Cosmos.PartitionKey(jobApplication.ApplicantId);
+                        _meetingRepository.UpdateItemAsync(new Guid(jobApplication.ApplicantId), jobApplication.FirstMeeting);
 
                     if(jobApplication.ApplicantTasks.Any())
                     { 
                         foreach (var appTask in jobApplication.ApplicantTasks)
                         {
-                            _applicantTaskRepository.AddOrUpdateAsync(appTask, applicantIdPartitionKey);
+                            _applicantTaskRepository.UpdateItemAsync(new Guid(jobApplication.ApplicantId), appTask);
                         }
                     }
 
@@ -66,7 +64,7 @@ namespace AzureFunctionsSyncCollections
                     { 
                         foreach (var recruiter in jobApplication.Recruiters)
                         {
-                            _recruiterRepository.AddOrUpdateAsync(recruiter, new Microsoft.Azure.Cosmos.PartitionKey(recruiter.Lastname));
+                            _recruiterRepository.UpdateItemAsync(new Guid(recruiter.Id), recruiter);
                         }
                     }
                 }

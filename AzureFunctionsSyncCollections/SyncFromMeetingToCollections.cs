@@ -45,12 +45,12 @@ namespace AzureFunctionsSyncCollections
 
                 foreach (var meetingFollowUp in meeting.FollowUpMeetings)
                 {
-                    _meetingRepository.AddOrUpdateAsync(meetingFollowUp, applicantIdPartitionKey);
+                    _meetingRepository.UpdateItemAsync(new Guid(meeting.ApplicantId), meetingFollowUp);
                 }
 
                 foreach (var recruiter in meeting.Recruiters)
                 {
-                    _recruiterRepository.AddOrUpdateAsync(recruiter, new Microsoft.Azure.Cosmos.PartitionKey(recruiter.Lastname));
+                    _recruiterRepository.UpdateItemAsync(new Guid(recruiter.Id), recruiter);
                 }
             }
         }

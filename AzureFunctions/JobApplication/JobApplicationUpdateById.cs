@@ -30,9 +30,9 @@ namespace AzureFunctions.JobApplication
                 var jobApplicationItem = JsonConvert.DeserializeObject<Core.Entities.JobApplication>(await new StreamReader(req.Body).ReadToEndAsync());
                 var applicantIdPartitionKey = new Microsoft.Azure.Cosmos.PartitionKey(jobApplicationItem.ApplicantId);
 
-                var savedJobApplicationItem = await _jobApplicationRepository.AddOrUpdateAsync(jobApplicationItem, applicantIdPartitionKey);
+                await _jobApplicationRepository.UpdateItemAsync(new Guid(id), jobApplicationItem);
 
-                return new OkObjectResult(savedJobApplicationItem);
+                return new OkObjectResult(jobApplicationItem);
             }
             catch (Exception ex)
             {

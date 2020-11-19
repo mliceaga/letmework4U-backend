@@ -40,36 +40,20 @@ namespace Infrastructure.CosmosDbData.Repository
         public async Task<string> AddItemAsync(T item)
         {
             item.Id = GenerateId(item);
-            await _container.CreateItemAsync<T>(item, null);
+            await _container.CreateItemAsync<T>(item, new PartitionKey(item.Id.ToString()));
             return item.Id;
-        }
-
-        public async Task<T> AddOrUpdateAsync(T item, PartitionKey partitionKey)
-        {
-            T upsertedEntity = null; ;
-            try
-            {
-                var upsertedDoc = await _container.UpsertItemAsync(item, partitionKey);
-                upsertedEntity = JsonConvert.DeserializeObject<T>(upsertedDoc.Resource);
-            }
-            catch(Exception ex)
-            {
-                // TO DO (add logger)
-                throw ex;
-            }
-            return upsertedEntity;
         }
 
         public async Task DeleteItemAsync(Guid id)
         {
-            await this._container.DeleteItemAsync<T>(id.ToString(), PartitionKey.None);
+            await this._container.DeleteItemAsync<T>(id.ToString(), new PartitionKey(id.ToString()));
         }
 
         public async Task<T> GetItemAsync(Guid id)
         {
             try
             {
-                ItemResponse<T> response = await _container.ReadItemAsync<T>(id.ToString(), PartitionKey.None);
+                ItemResponse<T> response = await _container.ReadItemAsync<T>(id.ToString(), new PartitionKey(id.ToString()));
                 return response.Resource;
             }
             catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -127,7 +111,7 @@ namespace Infrastructure.CosmosDbData.Repository
 
         public async Task UpdateItemAsync(Guid id, T item)
         {
-            await this._container.UpsertItemAsync<T>(item, null);
+            await this._container.UpsertItemAsync<T>(item, new PartitionKey(id.ToString()));
         }
 
 
