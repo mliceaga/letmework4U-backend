@@ -50,7 +50,7 @@ namespace AzureFunctions
             services.AddScoped<IJobApplicationRepository, jobJobApplicationRepository>();
             services.AddScoped<IApplicantRepository, ApplicantRepository>();
             services.AddScoped<IApplicantTaskRepository, ApplicantTaskRepository>();
-            services.AddScoped<ILabelRepository, LabelRepository>();
+            // services.AddScoped<ILabelRepository, LabelRepository>();
             services.AddScoped<IMeetingRepository, MeetingRepository>();
             services.AddScoped<IRecruiterRepository, RecruiterRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();

@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Core.Entities;
 using Core.Interfaces.Persistence;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace AzureFunctionsSyncCollections
 {
@@ -40,24 +42,38 @@ namespace AzureFunctionsSyncCollections
         {
             if (input != null && input.Count > 0)
             {
-                log.LogInformation("jobApplications modified " + input.Count);
-                log.LogInformation("First jobApplication Id " + input[0].Id);
-                var jobApplication = (JobApplication)input;
-                
-                _companyRepository.AddOrUpdateAsync(jobApplication.Company, new Microsoft.Azure.Cosmos.PartitionKey(jobApplication.Company.Name));
+                try
+                { 
+                    var jobApplication = JsonConvert.DeserializeObject<JobApplication>(input[0].ToString());
 
-                _meetingRepository.AddOrUpdateAsync(jobApplication.FirstMeeting, new Microsoft.Azure.Cosmos.PartitionKey(jobApplication.ApplicantId));
+                    if(jobApplication.Company != null)
+                        _companyRepository.AddOrUpdateAsync(jobApplication.Company, new Microsoft.Azure.Cosmos.PartitionKey(jobApplication.Company.Name));
 
-                var applicantIdPartitionKey = new Microsoft.Azure.Cosmos.PartitionKey(jobApplication.ApplicantId);
+                    if(jobApplication.FirstMeeting != null)
+                        _meetingRepository.AddOrUpdateAsync(jobApplication.FirstMeeting, new Microsoft.Azure.Cosmos.PartitionKey(jobApplication.ApplicantId));
 
-                foreach (var appTask in jobApplication.ApplicantTasks)
-                {
-                    _applicantTaskRepository.AddOrUpdateAsync(appTask, applicantIdPartitionKey);
+                    var applicantIdPartitionKey = new Microsoft.Azure.Cosmos.PartitionKey(jobApplication.ApplicantId);
+
+                    if(jobApplication.ApplicantTasks.Any())
+                    { 
+                        foreach (var appTask in jobApplication.ApplicantTasks)
+                        {
+                            _applicantTaskRepository.AddOrUpdateAsync(appTask, applicantIdPartitionKey);
+                        }
+                    }
+
+                    if (jobApplication.Recruiters.Any())
+                    { 
+                        foreach (var recruiter in jobApplication.Recruiters)
+                        {
+                            _recruiterRepository.AddOrUpdateAsync(recruiter, new Microsoft.Azure.Cosmos.PartitionKey(recruiter.Lastname));
+                        }
+                    }
                 }
-
-                foreach(var recruiter in jobApplication.Recruiters)
+                catch(Exception ex)
                 {
-                    _recruiterRepository.AddOrUpdateAsync(recruiter, new Microsoft.Azure.Cosmos.PartitionKey(recruiter.Lastname));
+                    // TODO log exception
+                    throw ex;
                 }
 
             }

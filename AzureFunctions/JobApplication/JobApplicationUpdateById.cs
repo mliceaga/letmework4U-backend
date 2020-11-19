@@ -25,11 +25,22 @@ namespace AzureFunctions.JobApplication
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "patch", Route = "JobApplications/{id}")] HttpRequest req, string id, ILogger log)
         {
-            var JobApplicationOptions = JsonConvert.DeserializeObject<Core.Entities.JobApplication>(await new StreamReader(req.Body).ReadToEndAsync());
+            try
+            {
+                var jobApplicationItem = JsonConvert.DeserializeObject<Core.Entities.JobApplication>(await new StreamReader(req.Body).ReadToEndAsync());
+                var applicantIdPartitionKey = new Microsoft.Azure.Cosmos.PartitionKey(jobApplicationItem.ApplicantId);
 
-            await _jobApplicationRepository.UpdateItemAsync(new Guid(id), JobApplicationOptions);
+                var savedJobApplicationItem = await _jobApplicationRepository.AddOrUpdateAsync(jobApplicationItem, applicantIdPartitionKey);
 
-            return new OkObjectResult(JobApplicationOptions);
+                return new OkObjectResult(savedJobApplicationItem);
+            }
+            catch (Exception ex)
+            {
+                // TODO send 400 errors if it's the case, otherwise send 500.
+                return new StatusCodeResult(500);
+                // TO DO (add logger)
+                throw ex;
+            }
         }
     }
 }

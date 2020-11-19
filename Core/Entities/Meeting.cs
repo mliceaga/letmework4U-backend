@@ -20,8 +20,8 @@ namespace Core.Entities
         public string JobApplicationId { get; set; }
         public string Outcome { get; set; }
         public Meeting[] FollowUpMeetings { get; set; }
-        public Note Note { get; set; }
-        public Label[] Labels { get; set; }
+        public string Note { get; set; }
+        public string[] Labels { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

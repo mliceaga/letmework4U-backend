@@ -27,6 +27,6 @@ namespace Core.Interfaces.Persistence
         Task<string> AddItemAsync(T item);
         Task UpdateItemAsync(Guid id, T item);
         Task DeleteItemAsync(Guid id);
-        Task<T> AddOrUpdateAsync(T item, PartitionKey partitionKey)
+        Task<T> AddOrUpdateAsync(T item, PartitionKey partitionKey);
     }
 }

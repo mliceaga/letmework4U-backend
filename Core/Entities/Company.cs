@@ -13,7 +13,7 @@ namespace Core.Entities
         public string Telephone { get; set; }
         public string Address { get; set; }
         public string Country { get; set; }
-        public Label[] Labels { get; set; }
+        public string[] Labels { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

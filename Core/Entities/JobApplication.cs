@@ -32,9 +32,9 @@ namespace Core.Entities
         public DateTime DateApplied { get; set; }
         public Recruiter[] Recruiters { get; set; }
         public Meeting FirstMeeting { get; set; }
-        public Note[] Notes { get; set; }
+        public string[] Notes { get; set; }
         public ApplicantTask[] ApplicantTasks { get; set; }
-        public Label[] Labels { get; set; }
+        public string[] Labels { get; set; }
         public DateTime DeadLine { get; set; }
         public string JobOffer { get; set; }
         public DateTime CreatedOnDate { get; set; }

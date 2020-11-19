@@ -46,11 +46,17 @@ namespace Infrastructure.CosmosDbData.Repository
 
         public async Task<T> AddOrUpdateAsync(T item, PartitionKey partitionKey)
         {
-            T upsertedEntity;
-
-            var upsertedDoc = await _container.UpsertItemAsync(item, partitionKey);
-            upsertedEntity = JsonConvert.DeserializeObject<T>(upsertedDoc.Resource.ToString());
-
+            T upsertedEntity = null; ;
+            try
+            {
+                var upsertedDoc = await _container.UpsertItemAsync(item, partitionKey);
+                upsertedEntity = JsonConvert.DeserializeObject<T>(upsertedDoc.Resource);
+            }
+            catch(Exception ex)
+            {
+                // TO DO (add logger)
+                throw ex;
+            }
             return upsertedEntity;
         }
 
