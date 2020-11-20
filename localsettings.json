@@ -1,0 +1,46 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "letmework4U_DOCUMENTDB": "AccountEndpoint=https://localhost:8081/;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw=="
+  },
+  "ConnectionStrings": {
+    "CosmosDB": {
+      "EndpointUrl": "https://localhost:8081",
+      // default primary key used by CosmosDB emulator
+      "PrimaryKey": "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
+      "DatabaseName": "letmeworkCosmosDB",
+      "Containers": [
+        {
+          "Name": "applicants",
+          "PartitionKey": "/id"
+        },
+        {
+          "Name": "applicantTasks",
+          "PartitionKey": "/ApplicantId"
+        },
+        {
+          "Name": "companies",
+          "PartitionKey": "/Name"
+        },
+        {
+          "Name": "jobApplications",
+          "PartitionKey": "/ApplicantId"
+        },
+        {
+          "Name": "labels",
+          "PartitionKey": "/LabelText"
+        },
+        {
+          "Name": "meetings",
+          "PartitionKey": "/ApplicantId"
+        },
+        {
+          "Name": "recruiters",
+          "PartitionKey": "/Lastname"
+        }
+      ]
+    }
+  }
+}
