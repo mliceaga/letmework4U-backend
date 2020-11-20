@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunctions", "AzureFunctions\AzureFunctions.csproj", "{3016DAD0-CD36-40F7-BEF4-00E016AAD4D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureFunctionsSyncCollections", "AzureFunctionsSyncCollections\AzureFunctionsSyncCollections.csproj", "{CF5F907B-0360-4DA9-A20F-6EA48D5FE99B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunctionsSyncCollections", "AzureFunctionsSyncCollections\AzureFunctionsSyncCollections.csproj", "{CF5F907B-0360-4DA9-A20F-6EA48D5FE99B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

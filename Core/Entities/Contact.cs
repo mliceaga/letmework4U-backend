@@ -14,6 +14,7 @@ namespace Core.Entities
         public string ContactEmail { get; set; }
         public string SkypeId { get; set; }
         public string GoogleMeetId { get; set; }
+        public DateTime CreatedOnDate { get; set; }
         public bool IsDeleted { get; set; }
     }
 }
