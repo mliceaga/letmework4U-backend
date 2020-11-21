@@ -21,19 +21,26 @@ namespace AzureFunctions.Applicant
             _applicantRepository = applicantRepository;
         }
 
-        [FunctionName("ApplicationGetById")]
+        [FunctionName("ApplicantGetById")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "Applicants/ApplicationGetById/{id}")] HttpRequest req, string id,
             ILogger log)
         {
-            var applicant = await _applicantRepository.GetItemAsync(new Guid(id));
-
-            if (applicant == null)
+            try
             {
-                return new NotFoundObjectResult(id);
-            }
+                var applicant = await _applicantRepository.GetItemAsync(new Guid(id));
 
-            return new OkObjectResult(applicant);
+                if (applicant == null)
+                {
+                    return new NotFoundObjectResult(id);
+                }
+                return new OkObjectResult(applicant);
+            }
+            catch (Exception ex)
+            {
+                // TODO Handle exception
+                return new StatusCodeResult(500); ;
+            }
         }
     }
 }

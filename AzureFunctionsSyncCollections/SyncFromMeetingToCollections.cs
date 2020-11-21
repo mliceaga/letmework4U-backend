@@ -35,23 +35,27 @@ namespace AzureFunctionsSyncCollections
             LeaseCollectionName = "leasesMeetings",
             CreateLeaseCollectionIfNotExists = true)]IReadOnlyList<Document> input, ILogger log)
         {
-            if (input != null && input.Count > 0)
+            try
             {
-                log.LogInformation("jobApplications modified " + input.Count);
-                log.LogInformation("First jobApplication Id " + input[0].Id);
-                var meeting = (Meeting)input;
-
-                var applicantIdPartitionKey = new Microsoft.Azure.Cosmos.PartitionKey(meeting.ApplicantId);
-
-                foreach (var meetingFollowUp in meeting.FollowUpMeetings)
+                if (input != null && input.Count > 0)
                 {
-                    _meetingRepository.UpdateItemAsync(new Guid(meeting.ApplicantId), meetingFollowUp);
-                }
+                    var meeting = (Meeting)input;
 
-                foreach (var recruiter in meeting.Recruiters)
-                {
-                    _recruiterRepository.UpdateItemAsync(new Guid(recruiter.Id), recruiter);
+                    foreach (var meetingFollowUp in meeting.FollowUpMeetings)
+                    {
+                        _meetingRepository.UpdateItemAsync(new Guid(meeting.ApplicantId), meetingFollowUp);
+                    }
+
+                    foreach (var recruiter in meeting.Recruiters)
+                    {
+                        _recruiterRepository.UpdateItemAsync(new Guid(recruiter.Id), recruiter);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                // TODO log exception
+                throw ex;
             }
         }
     }

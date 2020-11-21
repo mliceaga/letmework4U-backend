@@ -26,8 +26,15 @@ namespace AzureFunctions.Applicant
             [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "Applicants/ApplicantDeleteById/{id}")] HttpRequest req, string id,
             ILogger log)
         {
-            await _applicantRepository.DeleteItemAsync(new Guid(id));
-
+            try
+            { 
+                await _applicantRepository.DeleteItemAsync(new Guid(id));
+            }
+            catch(Exception ex)
+            {
+                // TODO Handle exception
+                throw ex;
+            }
             return new NoContentResult();
         }
     }
