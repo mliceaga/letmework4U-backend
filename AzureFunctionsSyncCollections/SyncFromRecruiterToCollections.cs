@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace AzureFunctionsSyncCollections
 {
-    public class SyncFromJobApplicationToCollections
+    public class SyncFromRecruiterToCollections
     {
         private readonly IJobApplicationRepository _jobApplicationRepository;
         private readonly IApplicantTaskRepository _applicantTaskRepository;
@@ -19,7 +19,7 @@ namespace AzureFunctionsSyncCollections
         private readonly IRecruiterRepository _recruiterRepository;
         private readonly ICompanyRepository _companyRepository;
 
-        public SyncFromJobApplicationToCollections(IJobApplicationRepository jobApplicationRepository,
+        public SyncFromRecruiterToCollections(IJobApplicationRepository jobApplicationRepository,
         IApplicantTaskRepository applicantTaskRepository,
         IMeetingRepository meetingRepository,
         IRecruiterRepository recruiterRepository,
@@ -32,10 +32,10 @@ namespace AzureFunctionsSyncCollections
             _companyRepository = companyRepository;
         }
 
-        [FunctionName("SyncFromJobApplicationToCollections")]
+        [FunctionName("SyncFromRecruiterToCollections")]
         public void Run([CosmosDBTrigger(
             databaseName: "letmeworkCosmosDB",
-            collectionName: "jobApplications",
+            collectionName: "recruiter",
             ConnectionStringSetting = "letmework4U_DOCUMENTDB",
             LeaseCollectionName = "leasesJobApplications",
             CreateLeaseCollectionIfNotExists = true)]IReadOnlyList<Document> input, ILogger log)
